@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gothic Envelope Letter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Creepster&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Playfair Display', serif;
+            overflow: hidden;
+        }
+
+        .scene {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Envelope styling */
+        .envelope {
+            position: relative;
+            width: 350px;
+            height: 220px;
+            background: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+            border-radius: 5px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid #8a2be2;
+        }
+
+        .envelope:before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #8a2be2, #ff00ff, #8a2be2);
+            border-radius: 7px;
+            z-index: -1;
+            animation: borderAnimation 3s linear infinite;
+        }
+
+        @keyframes borderAnimation {
+            0% {
+                filter: blur(5px) hue-rotate(0deg);
+            }
+            100% {
+                filter: blur(5px) hue-rotate(360deg);
+            }
+        }
+
+        /* Envelope flap */
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 55%;
+            background: linear-gradient(to bottom, #3a3a3a, #2c2c2c);
+            clip-path: polygon(0 0, 50% 50%, 100% 0);
+            transform-origin: top;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
+            border-bottom: 1px solid #8a2be2;
+        }
+
+        /* Envelope body */
+        .envelope-body {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(to bottom, #2c2c2c, #1a1a1a);
+            z-index: 1;
+            border-top: 1px solid #8a2be2;
+        }
+
+        /* Gothic elements */
+        .gothic-element {
+            position: absolute;
+            color: #8a2be2;
+            font-size: 24px;
+            z-index: 3;
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
+        }
+
+        .skull-1 {
+            top: 15px;
+            left: 20px;
+        }
+
+        .skull-2 {
+            top: 15px;
+            right: 20px;
+        }
+
+        .rose {
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 28px;
+        }
+
+        /* Letter inside */
+        .letter {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            width: calc(100% - 30px);
+            height: calc(100% - 20px);
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            z-index: 3;
+            border: 1px solid #8a2be2;
+        }
+
+        .letter-content {
+            text-align: center;
+            color: #f0f0f0;
+            width: 100%;
+        }
+
+        .letter-content h2 {
+            font-family: 'Cinzel Decorative', cursive;
+            color: #ff69b4;
+            margin-bottom: 20px;
+            font-size: 28px;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .letter-content h2:after {
+            content: "❦";
+            display: block;
+            font-size: 36px;
+            margin-top: 10px;
+            color: #8a2be2;
+        }
+
+        .letter-content p {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            line-height: 1.6;
+            color: #f0f0f0;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+            letter-spacing: 1px;
+            padding: 15px;
+            border-top: 1px solid #8a2be2;
+            border-bottom: 1px solid #8a2be2;
+            margin: 10px 0;
+        }
+
+        .signature {
+            font-family: 'Creepster', cursive;
+            color: #8a2be2;
+            font-size: 20px;
+            margin-top: 20px;
+            text-shadow: 0 0 5px rgba(138, 43, 226, 0.5);
+            letter-spacing: 1px;
+        }
+
+        /* Open state */
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope.open .letter {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Click instruction */
+        .instruction {
+            position: absolute;
+            bottom: -50px;
+            color: #8a2be2;
+            font-family: 'Creepster', cursive;
+            font-size: 18px;
+            text-align: center;
+            width: 100%;
+            text-shadow: 0 0 5px rgba(138, 43, 226, 0.7);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Decorative corners */
+        .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #8a2be2;
+        }
+
+        .corner-tl {
+            top: 10px;
+            left: 10px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner-tr {
+            top: 10px;
+            right: 10px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .corner-bl {
+            bottom: 10px;
+            left: 10px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .corner-br {
+            bottom: 10px;
+            right: 10px;
+            border-left: none;
+            border-top: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="scene">
+        <div class="envelope" id="envelope">
+            <div class="envelope-flap"></div>
+            <div class="envelope-body"></div>
+            
+            <!-- Gothic elements -->
+            <div class="gothic-element skull-1">💀</div>
+            <div class="gothic-element skull-2">💀</div>
+            <div class="gothic-element rose">🌹</div>
+            
+            <!-- Decorative corners -->
+            <div class="corner corner-tl"></div>
+            <div class="corner corner-tr"></div>
+            <div class="corner corner-bl"></div>
+            <div class="corner corner-br"></div>
+            
+            <!-- Letter inside -->
+            <div class="letter">
+                <div class="letter-content">
+                    <h2>A Message for You</h2>
+                    <p>Hello</p>
+                    <div class="signature">With Gothic Embrace</div>
+                </div>
+            </div>
+        </div>
+        <div class="instruction">Click the envelope to open</div>
+    </div>
+
+    <script>
+        const envelope = document.getElementById('envelope');
+        envelope.addEventListener('click', function() {
+            this.classList.toggle('open');
+        });
+    </script>
+</body>
+</html>
