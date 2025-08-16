@@ -260,6 +260,21 @@
             border-left: none;
             border-top: none;
         }
+
+        #hearts {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 100;
+        }
+        .heart {
+            position: absolute;
+            top: -50px;
+            color: #ff69b4;
+            animation: fall 2.5s linear forwards;
+            will-change: transform;
+        }
     </style>
 </head>
 <body>
@@ -289,13 +304,30 @@
             </div>
         </div>
         <div class="instruction">I made this for you</div>
+        <div id="hearts"></div>
     </div>
 
     <script>
         const envelope = document.getElementById('envelope');
         envelope.addEventListener('click', function() {
             this.classList.toggle('open');
+            if (this.classList.contains('open')) {
+                pourHearts();
+            }
         });
+
+        function pourHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            heartsContainer.innerHTML = '';
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = (Math.random() * 2) + 's';
+                heart.style.fontSize = (Math.random() * 40 + 20) + 'px';
+                heartsContainer.appendChild(heart);
+            }
+        }
     </script>
 </body>
 </html>
